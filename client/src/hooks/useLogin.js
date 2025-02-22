@@ -15,7 +15,7 @@ export const useLogin = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', userData);
+      const response = await axios.post('/api/auth/login', userData);
       setSuccessMessage(response.data.message);
       // Save the token to local storage or context
       localStorage.setItem('token', response.data.token);
