@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion"; // Import Framer Motion
-import { Navbar } from "../components/Navbar";
 import { Hero } from "../components/Hero";
+import {Navbar} from '../components/NavBar'
 import { MarketData } from "../components/MarketData";
 import { Features } from "../components/Features";
 import { Staking } from "../components/Staking";
