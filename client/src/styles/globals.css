@@ -1,0 +1,228 @@
+// src/pages/Dashboard.jsx
+// import { useState, useEffect } from 'react';
+// import { 
+//   Wallet, PieChart, Activity, Clock, ArrowUpDown, 
+//   Bitcoin, Settings, Menu, X, AlertCircle, 
+//   ChevronRight
+// } from 'lucide-react';
+// import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+
+// const data = [
+//   { name: 'Jan', value: 4000 },
+//   { name: 'Feb', value: 3000 },
+//   { name: 'Mar', value: 5000 },
+//   { name: 'Apr', value: 4500 },
+//   { name: 'May', value: 6000 },
+// ];
+
+// export const Dashboard = () => {
+//   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+//   const [isMobile, setIsMobile] = useState(false);
+
+//   useEffect(() => {
+//     const checkMobile = () => setIsMobile(window.innerWidth < 768);
+//     checkMobile();
+//     window.addEventListener('resize', checkMobile);
+//     return () => window.removeEventListener('resize', checkMobile);
+//   }, []);
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex flex-col md:flex-row">
+//       {/* Mobile Header */}
+//       <div className="md:hidden flex items-center justify-between p-4 border-b border-white/10">
+//         <button 
+//           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+//           className="text-gray-400 hover:text-white"
+//         >
+//           {isSidebarOpen ? <X /> : <Menu />}
+//         </button>
+//         <div className="flex items-center space-x-2">
+//           <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg" />
+//           <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+//             CryptoWealth
+//           </span>
+//         </div>
+//         <Wallet className="text-gray-400" />
+//       </div>
+
+//       {/* Sidebar - Responsive */}
+//       <div className={`bg-gray-900 transition-all duration-300 
+//         ${isMobile ? 
+//           `fixed inset-0 z-50 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0` : 
+//           `${isSidebarOpen ? 'w-64' : 'w-20'}`}`}
+//       >
+//         <div className="p-6 flex items-center justify-between">
+//           <div className={`flex items-center space-x-2 ${!isSidebarOpen && 'hidden'}`}>
+//             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg" />
+//             <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+//               CryptoWealth
+//             </span>
+//           </div>
+//           {!isMobile && (
+//             <button 
+//               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+//               className="text-gray-400 hover:text-white transition"
+//             >
+//               <ChevronRight className={`transform ${isSidebarOpen ? 'rotate-180' : ''}`} />
+//             </button>
+//           )}
+//         </div>
+
+//         <nav className="mt-8 space-y-2 px-4">
+//           {[
+//             { icon: <PieChart />, text: 'Portfolio' },
+//             { icon: <Activity />, text: 'Activity' },
+//             { icon: <Clock />, text: 'History' },
+//             { icon: <ArrowUpDown />, text: 'Transactions' },
+//             { icon: <Bitcoin />, text: 'Assets' },
+//           ].map((item, index) => (
+//             <a
+//               key={index}
+//               href="#"
+//               className="flex items-center space-x-3 p-3 text-gray-300 hover:bg-white/5 rounded-lg transition"
+//             >
+//               {item.icon}
+//               <span className={`${(!isSidebarOpen && !isMobile) && 'hidden'}`}>{item.text}</span>
+//             </a>
+//           ))}
+//         </nav>
+
+//         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
+//           <div className="flex items-center space-x-3 p-3 text-gray-300">
+//             <Settings />
+//             <span className={`${(!isSidebarOpen && !isMobile) && 'hidden'}`}>Settings</span>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Main Content */}
+//       <div className="flex-1 p-4 md:p-8">
+//         {/* Header */}
+//         <div className="md:flex justify-between items-center mb-4 md:mb-8">
+//           <h1 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-0">Portfolio Overview</h1>
+//           <button className="bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 rounded-full hover:from-blue-500 hover:to-purple-500 transition-all flex items-center space-x-2 w-full md:w-auto">
+//             <Wallet className="w-4 h-4 md:w-5 md:h-5" />
+//             <span className="truncate">0x1f...C4B2</span>
+//           </button>
+//         </div>
+
+//         {/* Stats Grid */}
+//         <div className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3 md:gap-6">
+//           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-6">
+//             <div className="flex items-center justify-between">
+//               <div>
+//                 <p className="text-gray-400 text-sm md:text-base">Total Balance</p>
+//                 <p className="text-2xl md:text-3xl font-bold text-white">$54,320.50</p>
+//               </div>
+//               <div className="bg-green-500/20 p-2 md:p-3 rounded-lg">
+//                 <PieChart className="w-5 h-5 md:w-6 md:h-6 text-green-400" />
+//               </div>
+//             </div>
+//             <div className="mt-2 md:mt-4 flex items-center space-x-2 text-green-400">
+//               <ArrowUpDown className="w-4 h-4" />
+//               <span className="text-sm md:text-base">+12.4% (30d)</span>
+//             </div>
+//           </div>
+
+//           {/* Repeat similar mobile adjustments for other stats cards */}
+//         </div>
+
+//         {/* Chart */}
+//         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-6 mb-6">
+//           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
+//             <h2 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-0">Portfolio Performance</h2>
+//             <div className="flex space-x-2 md:space-x-4">
+//               <button className="text-sm md:text-base text-gray-400 hover:text-white">1D</button>
+//               <button className="text-sm md:text-base text-blue-400">1W</button>
+//               <button className="text-sm md:text-base text-gray-400 hover:text-white">1M</button>
+//               <button className="text-sm md:text-base text-gray-400 hover:text-white">1Y</button>
+//             </div>
+//           </div>
+//           <div className="h-48 md:h-64">
+//             <ResponsiveContainer width="100%" height="100%">
+//               <LineChart data={data}>
+//                 <XAxis dataKey="name" stroke="#64748b" />
+//                 <YAxis stroke="#64748b" />
+//                 <Tooltip 
+//                   contentStyle={{ backgroundColor: '#0f172a', border: 'none' }}
+//                   itemStyle={{ color: '#e2e8f0' }}
+//                 />
+//                 <Line 
+//                   type="monotone" 
+//                   dataKey="value" 
+//                   stroke="#818cf8" 
+//                   strokeWidth={2}
+//                   dot={false}
+//                 />
+//               </LineChart>
+//             </ResponsiveContainer>
+//           </div>
+//         </div>
+
+//         {/* Recent Transactions */}
+//         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-6">
+//           <div className="flex items-center justify-between mb-4">
+//             <h2 className="text-lg md:text-xl font-semibold text-white">Recent Transactions</h2>
+//             <button className="text-blue-400 hover:text-blue-300 flex items-center">
+//               <ArrowUpDown className="w-4 h-4 mr-2" />
+//               <span className="hidden md:inline">View All</span>
+//             </button>
+//           </div>
+
+//           <div className="space-y-3">
+//             {[
+//               { type: 'Buy', asset: 'BTC', amount: '0.45', date: '2024-03-15', status: 'Completed' },
+//               { type: 'Sell', asset: 'ETH', amount: '12.8', date: '2024-03-14', status: 'Pending' },
+//               { type: 'Stake', asset: 'CWT', amount: '500', date: '2024-03-13', status: 'Completed' },
+//             ].map((transaction, index) => (
+//               <div key={index} className="flex items-center justify-between p-3 md:p-4 bg-white/5 rounded-lg hover:bg-white/10 transition">
+//                 <div className="flex items-center space-x-2 md:space-x-4">
+//                   <div className={`p-2 rounded-lg ${transaction.type === 'Buy' ? 'bg-green-500/20' : transaction.type === 'Sell' ? 'bg-red-500/20' : 'bg-blue-500/20'}`}>
+//                     <ArrowUpDown className={`w-4 h-4 md:w-5 md:h-5 ${transaction.type === 'Buy' ? 'text-green-400' : transaction.type === 'Sell' ? 'text-red-400' : 'text-blue-400'}`} />
+//                   </div>
+//                   <div>
+//                     <p className="text-white text-sm md:text-base">{transaction.type} {transaction.asset}</p>
+//                     <p className="text-gray-400 text-xs md:text-sm">{transaction.date}</p>
+//                   </div>
+//                 </div>
+//                 <div className="text-right">
+//                   <p className="text-white text-sm md:text-base">{transaction.amount}</p>
+//                   <p className={`text-xs md:text-sm ${transaction.status === 'Completed' ? 'text-green-400' : 'text-yellow-400'}`}>
+//                     {transaction.status}
+//                   </p>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Mobile Bottom Navigation */}
+//       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-white/10">
+//         <div className="grid grid-cols-5 gap-2 p-2">
+//           {[
+//             { icon: <PieChart />, label: 'Home' },
+//             { icon: <Activity />, label: 'Activity' },
+//             { icon: <ArrowUpDown />, label: 'Trade' },
+//             { icon: <Bitcoin />, label: 'Assets' },
+//             { icon: <Settings />, label: 'More' },
+//           ].map((item, index) => (
+//             <button key={index} className="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-white">
+//               {item.icon}
+//               <span className="text-xs mt-1">{item.label}</span>
+//             </button>
+//           ))}
+//         </div>
+//       </div>
+
+//       {/* Alert Notification */}
+//       <div className={`fixed bottom-4 right-4 bg-yellow-500/20 p-4 rounded-lg flex items-center space-x-3 border border-yellow-500/30 ${isMobile ? 'mb-16' : ''}`}>
+//         <AlertCircle className="text-yellow-400 w-5 h-5" />
+//         <div>
+//           <p className="text-white text-sm">Pending KYC verification</p>
+//           <p className="text-yellow-400 text-xs">Complete verification to enable withdrawals</p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
