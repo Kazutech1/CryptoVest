@@ -9,6 +9,6 @@ export default defineConfig({
     },
   },
   define: {
-    'import.meta.env.VITE_API_URL': JSON.stringify('http://localhost:5000'), // Add the backend URL
+    'import.meta.env.VITE_API_URL': JSON.stringify(''), // Add the backend URL
   },
 });
