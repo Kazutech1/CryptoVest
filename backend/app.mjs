@@ -16,11 +16,26 @@ const app = express();
 app.use(express.json());  // Apply global middleware for JSON parsing
 
 
+const allowedOrigins = [
+  "http://localhost:5173", // Local development
+  "https://cryptowealth.onrender.com" // Deployed frontend
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow only your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  credentials: true // Allow cookies if using authentication
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
+
+// Allow preflight requests for all routes (Fixes CORS issues with POST requests)
+app.options("*", cors());
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
