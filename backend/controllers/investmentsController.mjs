@@ -45,6 +45,8 @@ export const purchaseInvestmentPlan = async (req, res) => {
     // Calculate daily profit
     const dailyProfit = (amount * plan.roi) / (100); // ROI per day
 
+    user.balance == dailyProfit + user.balance
+
     // Create investment record
     const investmentId = new mongoose.Types.ObjectId(); // Fix applied here
     user.investments.push({
